@@ -5,7 +5,10 @@
 ## R CMD check results
 There were no ERRORs, WARNINGs or NOTEs.
 
-This is the first submission.
+I submitted earlier today for the first time.
+Uwe Ligges suggested changing the package title and add
+a doi in the description. I made these two changes 
+(nothing else) and am resubmitting.
 
 
 ## Downstream dependencies
