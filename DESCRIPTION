@@ -1,7 +1,7 @@
 Package: sFFLHD
 Type: Package
 Title: Sequential Full Factorial-Based Latin Hypercube Design
-Version: 0.1.1
+Version: 0.1.1.9000
 Author: Collin Erickson
 Maintainer: Collin Erickson <collinberickson@gmail.com>
 Description: Gives design points from a sequential full factorial-based

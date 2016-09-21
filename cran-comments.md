@@ -9,7 +9,7 @@ needing to load the entire package and am awaiting their reply.
 
 ## Test environments
 * local Windows 7 install, R 3.3.1
-* Linux ona UNIX cluster, R 3.1.2
+* Linux on a UNIX cluster, R 3.1.2
 * win-builder
 
 ## R CMD check results
