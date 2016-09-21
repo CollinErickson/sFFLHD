@@ -1,15 +1,19 @@
+The previous version doesn't work since the entire DoE.base
+package needs to be loaded. So I moved it to from 
+Imports to Depends.
+I don't want to do this since I only directly call one
+function from the package, but it's the only way to get it
+to work now. I have emailed the maintainer of DoE.base seeing
+if they have plans to make the single function work without
+needing to load the entire package and am awaiting their reply.
+
 ## Test environments
 * local Windows 7 install, R 3.3.1
+* Linux ona UNIX cluster, R 3.1.2
 * win-builder
 
 ## R CMD check results
 There were no ERRORs, WARNINGs or NOTEs.
-
-I submitted earlier today for the first time.
-Uwe Ligges suggested changing the package title and add
-a doi in the description. I made these two changes 
-(nothing else) and am resubmitting.
-
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.

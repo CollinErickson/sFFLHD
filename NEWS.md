@@ -8,4 +8,5 @@ Accepted by CRAN on 8/26/2015: https://cran.r-project.org/web/packages/sFFLHD/in
 
 # sFFLHD 0.1.1
 
-Add updates here.
+Moved DoE.design to Depends since the entire package needs to be loaded.
+I'd rather not do this, but it's the only way to get it to work.
