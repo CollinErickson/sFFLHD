@@ -14,15 +14,15 @@
 #' mat <- matrix(1:12, ncol=2)
 #' split_matrix(mat, 4, shuffle=FALSE)
 #' split_matrix(mat, 4, shuffle=TRUE)
-#' split_matrix(mat, nsplits=4, shuffle=FALSE)
+#' split_matrix(mat, nsplits=3, shuffle=FALSE) # same as 4 rowspergroup
 split_matrix <- function(mat,rowspergroup=NULL,nsplits=NULL,shuffle=TRUE) {
   if(is.null(rowspergroup)) {
-    rowspergroup <- nrow(mat) / nsplits
+    rowspergroup <- ceiling(nrow(mat) / nsplits)
   } else {
-    nsplits <- nrow(mat) / rowspergroup
+    nsplits <- ceiling(nrow(mat) / rowspergroup)
   }
   lapply(ifelse(shuffle,sample,identity)(1:nsplits),
-         function(ii){mat[((ii-1)*rowspergroup+1):(ii*rowspergroup),]})
+         function(ii){mat[((ii-1)*rowspergroup+1):min(ii*rowspergroup, nrow(mat)), , drop=FALSE]})
 }
 
 #' sFFLHD object that gives a batch of points at a time.

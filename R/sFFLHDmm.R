@@ -1,4 +1,47 @@
+#' sFFLHD R6 object that gives a batch of points at a time using maximin.
+#' To do this it takes all batches for stage at beginning of stage
+#' and then reorders them. Not that great in practice.
+#'
+#' @field D numeric. The number of dimensions for the design. Must be set.
+#' @field L numeric. The number of points in each batch, also the number of
+#'  levels of each dimension. Must be set.
+#' @field maximin logical. Should maximin distance be used to space out points?
+#' @field a numeric. A root of L that determines the intermediate stages.
+#' Is automatically set to smallest possible value, which is recommended.
+#' @field b integer. The batch number.
+#' @field nb integer. The number of points selected so far.
+#' @field lb numeric. Current levels of the small grid.
+#' @field Lb numeric. Current levels of the intermediate grid.
+#' @field Xb matrix. Current design matrix, continuous from 0 to 1.
+#' @field Vb matrix. Small grid design.
+#' @field Mb matrix. Intermediate grid design.
+#' @field Wb matrix. Big grid design.
+#' @field A1 matrix. The first OA slice.
+#' @field r integer. Used to keep track of loop index.
+#' @field p integer. Used to keep track of loop index.
+#' @field Ar matrix. Current Ar.
+#' @field stage integer. Current stage.
+#' @field vii integer. Used to keep track of location in stage 2.
+#' @field Fslices list. A list of slices.
+#' @field FF1.1 matrix. Temporary matrix used to generate slices.
+#' @field Mb.store matrix. Temporary storage of Mb.
+#' @field v.shuffle integer. A storage value for storing order.
+#' Requires extra optimization.
+#'
+#' @return A sFFLHDmm object
+#'
 #' @export
+#'
+#' @importFrom stats runif
+#' @importFrom methods new
+#' @importFrom conf.design factorize
+#' @importFrom DoE.base oa.design
+#'
+#' @examples
+#' s <- sFFLHDmm$new(D=2,L=3)
+#' s$get.batch()
+#' s <- sFFLHDmm$new(D=2,L=4)
+#' s$get.batch()
 sFFLHDmm <- R6::R6Class(classname="sFFLHDmm",
     public = list(
       s = NULL, # keep a sFFLHD

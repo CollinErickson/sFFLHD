@@ -11,5 +11,5 @@ Description: Gives design points from a sequential full factorial-based
 License: GPL-3
 LazyData: TRUE
 RoxygenNote: 5.0.1
-Imports: methods, stats, conf.design
+Imports: methods, stats, conf.design, R6
 Depends: DoE.base
