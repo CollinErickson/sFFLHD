@@ -10,6 +10,6 @@ Description: Gives design points from a sequential full factorial-based
  <doi:10.1080/00401706.2015.1108233>).
 License: GPL-3
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Imports: methods, stats, conf.design, R6
 Depends: DoE.base

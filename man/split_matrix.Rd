@@ -29,4 +29,3 @@ split_matrix(mat, 4, shuffle=FALSE)
 split_matrix(mat, 4, shuffle=TRUE)
 split_matrix(mat, nsplits=3, shuffle=FALSE) # same as 4 rowspergroup
 }
-

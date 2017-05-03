@@ -2,8 +2,8 @@
 % Please edit documentation in R/sFFLHD.R
 \docType{class}
 \name{sFFLHD-class}
-\alias{sFFLHD}
 \alias{sFFLHD-class}
+\alias{sFFLHD}
 \title{sFFLHD object that gives a batch of points at a time.}
 \value{
 A sFFLHD object
@@ -61,10 +61,11 @@ Is automatically set to smallest possible value, which is recommended.}
 \item{\code{v.shuffle}}{integer. A storage value for storing order.
 Requires extra optimization.}
 }}
+
+
 \examples{
 s <- sFFLHD$new(D=2,L=3)
 s$get.batch()
 s <- sFFLHD$new(D=2,L=4)
 s$get.batch()
 }
-

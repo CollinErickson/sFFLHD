@@ -68,6 +68,7 @@ Is automatically set to smallest possible value, which is recommended.}
 \item{\code{v.shuffle}}{integer. A storage value for storing order.
 Requires extra optimization.}
 }}
+
 \examples{
 s <- sFFLHDmm$new(D=2,L=3)
 s$get.batch()
@@ -75,4 +76,3 @@ s <- sFFLHDmm$new(D=2,L=4)
 s$get.batch()
 }
 \keyword{datasets}
-
