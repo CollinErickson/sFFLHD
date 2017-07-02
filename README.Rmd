@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 
 # sFFLHD
 
+[![Travis-CI Build Status](https://travis-ci.org/CollinErickson/GauPro.svg?branch=master)](https://travis-ci.org/CollinErickson/GauPro)
+
 This R package provides a class that generates experiment sFFLHD designs. 
 Sequential full factorial-based Latin hypercube design were created by
 Duan, Ankenman, Sanchez, and Sanchez (2015, Technometrics).
@@ -26,6 +28,7 @@ to see how new batches are added).
 
 ```{r}
 library(sFFLHD)
+set.seed(0)
 s <- sFFLHD$new(D=2,L=3)
 plot(s$get.batch(),xlim=0:1,ylim=0:1,pch=19)
 abline(h=(0:(s$Lb))/s$Lb,v=(0:(s$Lb))/s$Lb,col=3);points(s$get.batch(),pch=19)
