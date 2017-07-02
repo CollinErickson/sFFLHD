@@ -3,7 +3,7 @@
 sFFLHD
 ======
 
-[![Travis-CI Build Status](https://travis-ci.org/CollinErickson/GauPro.svg?branch=master)](https://travis-ci.org/CollinErickson/GauPro)
+[![Travis-CI Build Status](https://travis-ci.org/CollinErickson/sFFLHD.svg?branch=master)](https://travis-ci.org/CollinErickson/sFFLHD)
 
 This R package provides a class that generates experiment sFFLHD designs. Sequential full factorial-based Latin hypercube design were created by Duan, Ankenman, Sanchez, and Sanchez (2015, Technometrics).
 
