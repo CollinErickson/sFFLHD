@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 # sFFLHD
 
 [![Travis-CI Build Status](https://travis-ci.org/CollinErickson/sFFLHD.svg?branch=master)](https://travis-ci.org/CollinErickson/sFFLHD)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/sFFLHD)](http://cran.r-project.org/package=sFFLHD)
+
 
 This R package provides a class that generates experiment sFFLHD designs. 
 Sequential full factorial-based Latin hypercube design were created by
