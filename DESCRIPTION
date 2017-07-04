@@ -13,3 +13,4 @@ LazyData: TRUE
 RoxygenNote: 6.0.1
 Imports: methods, stats, conf.design, R6
 Depends: DoE.base
+Suggests: testthat
