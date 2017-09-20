@@ -1,32 +1,21 @@
+#' sFFLHD maximin
+#'
 #' sFFLHD R6 object that gives a batch of points at a time using maximin.
 #' To do this it takes all batches for stage at beginning of stage
-#' and then reorders them. Not that great in practice.
+#' and then reorders them.
+#' Not that great in practice.
+#' Requires extra optimization and storage.
 #'
 #' @field D numeric. The number of dimensions for the design. Must be set.
 #' @field L numeric. The number of points in each batch, also the number of
 #'  levels of each dimension. Must be set.
-#' @field maximin logical. Should maximin distance be used to space out points?
-#' @field a numeric. A root of L that determines the intermediate stages.
-#' Is automatically set to smallest possible value, which is recommended.
 #' @field b integer. The batch number.
-#' @field nb integer. The number of points selected so far.
-#' @field lb numeric. Current levels of the small grid.
-#' @field Lb numeric. Current levels of the intermediate grid.
-#' @field Xb matrix. Current design matrix, continuous from 0 to 1.
-#' @field Vb matrix. Small grid design.
-#' @field Mb matrix. Intermediate grid design.
-#' @field Wb matrix. Big grid design.
-#' @field A1 matrix. The first OA slice.
-#' @field r integer. Used to keep track of loop index.
-#' @field p integer. Used to keep track of loop index.
-#' @field Ar matrix. Current Ar.
-#' @field stage integer. Current stage.
-#' @field vii integer. Used to keep track of location in stage 2.
-#' @field Fslices list. A list of slices.
-#' @field FF1.1 matrix. Temporary matrix used to generate slices.
-#' @field Mb.store matrix. Temporary storage of Mb.
-#' @field v.shuffle integer. A storage value for storing order.
-#' Requires extra optimization.
+#' @field s sFFLHD. The design it takes the points and then reorders them.
+#' @field X matrix. The points given in the design.
+#' @field Xchoices list. Batches taken from s and have been reordered,
+#' but which have not been returned to the user yet.
+#'
+#'
 #'
 #' @return A sFFLHDmm object
 #'
@@ -46,7 +35,7 @@ sFFLHDmm <- R6::R6Class(classname="sFFLHDmm",
     public = list(
       s = NULL, # keep a sFFLHD
       b = 0,
-      have_choices = FALSE,
+      # have_choices = FALSE,
       Xchoices = list(),
       X = NULL,
       D = NULL,

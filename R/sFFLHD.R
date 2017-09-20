@@ -133,7 +133,7 @@ sFFLHD <- setRefClass('sFFLHD',
       # if (inherits(OA, "try-error")) {
       else {
         #avail.oas <- DoE.base::show.oas(factors=list(nlevels=L, number=D+1))
-        # Check L in 2 to 16. Might be 729=27^2 or 4096=64^2 too...
+        # Check L in 2 to 16
         avail.oas <- sapply(2:16,
                function(i) {
                  capture.output(av <- DoE.base::show.oas(nruns=i^2, factors=list(nlevels=i, number=D+1), show=0))
