@@ -115,8 +115,43 @@ sFFLHD <- setRefClass('sFFLHD',
       if (length(D)==0 | length(L)==0 | length(a)==0) {
         stop('D, L, and a must be set when creating new object')
       }
+
       # get first OA
-      OA <- DoE.base::oa.design(nruns=L^2,nfactors=D+1,nlevels=L, columns="min3")
+      # browser()
+
+      # Don't just create design because sometimes it tries to do
+      #  a massive full factorial instead with 1e8 entries, which is stupid
+      # OA <- try(DoE.base::oa.design(nruns=L^2, nfactors=D+1, nlevels=L, columns="min3"))
+
+      # Instead check for it first
+      OA.avail <- DoE.base::show.oas(nruns=L^2, factors=list(nlevels=L, number=D+1), show=0)
+      if (!is.null(OA.avail)) {
+        OA <- DoE.base::oa.design(nruns=L^2, nfactors=D+1, nlevels=L, columns="min3")
+      }
+
+      # If it wasn't available, then check other L to tell user what to try instead
+      # if (inherits(OA, "try-error")) {
+      else {
+        #avail.oas <- DoE.base::show.oas(factors=list(nlevels=L, number=D+1))
+        # Check L in 2 to 16. Might be 729=27^2 or 4096=64^2 too...
+        avail.oas <- sapply(2:16,
+               function(i) {
+                 capture.output(av <- DoE.base::show.oas(nruns=i^2, factors=list(nlevels=i, number=D+1), show=0))
+                 !is.null(av)
+               }
+        )
+
+        if (all(!avail.oas)) {
+          stop("No OA can be found for L in 2 to 16 for given D")
+        } else {
+          avail.Ls <- (2:16)[avail.oas]
+          # nruns <- avail.oas$nruns[1]
+          # message(paste0("Found OA but it requires ", nruns, " runs"))
+          stop(paste("Try L one of",paste(avail.Ls, collapse=', '),"instead"))
+        }
+        # OA <- DoE.base::oa.design(nruns=nruns, nfactors=D+1, nlevels=L, columns="min3")
+      }
+
       OA0.5 <- apply(as.matrix(OA),1:2,as.integer)
       OA1 <- OA0.5[sample(1:L^2),]
       OA2 <- OA1[,sample(1:(D+1))]
