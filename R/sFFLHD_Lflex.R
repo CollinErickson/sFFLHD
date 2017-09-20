@@ -40,7 +40,6 @@ sFFLHD_Lflex <- R6::R6Class(
       self$D <- D
       self$L <- L
       self$Xchoices <- matrix(0, ncol=D, nrow=0)
-      if (!(prefer_L %in% c("near", "down", "up"))) {stop('prefer_L must be one of "near", "down", "up"')}
       self$prefer_L <- prefer_L
 
       # Check for requested OA
@@ -48,7 +47,7 @@ sFFLHD_Lflex <- R6::R6Class(
       # If avail, then use that L
       if (!is.null(OA.avail)) {
         # OA <- DoE.base::oa.design(nruns=L^2, nfactors=D+1, nlevels=L, columns="min3")
-        L_used = L
+        self$L_used = L
       }
 
       # If it wasn't available, then check other L to tell user what to try instead
@@ -87,7 +86,9 @@ sFFLHD_Lflex <- R6::R6Class(
           } else if (prefer_L == "near") {
             # Pick value nearest is abs val
             self$L_used <- avail.Ls[which.min(abs(avail.Ls-L))]
-          } else {stop("Error #2357385")}
+          } else {
+            stop('prefer_L must be one of "near", "down", "up"')
+          }
 
         }
         # print(paste("picking", self$L_used))

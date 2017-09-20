@@ -1,6 +1,6 @@
 context("sFFLHD_Lflex test")
 
-test_that("Is LHD", {
+test_that("Lflex works properly", {
   set.seed(0)
   # Get Lflex D=8, L=4, has to use L=8
   s <- sFFLHD_Lflex$new(D=8,L=4)
@@ -38,10 +38,13 @@ test_that("Is LHD", {
   expect_equal(nrow(s$Xchoices), 8)
   sb2 <- s$get.batch()
   expect_equal(nrow(s$Xchoices), 7)
-  # Check that the first two batches combined make a LH
-  # sb12 <- rbind(sb1, sb2)
-  # expect_true(all(apply(sb12, 2, function(coli) {all(sort(floor(8*coli)) == 0:7)})))
+  # Check that the first nine batches combined make a LH and OA
+  sb12 <- rbind(sb1, sb2, s$get.batches(7))
+  lhsmat <- sb12[1:81, ]
+  expect_true(all(apply(lhsmat, 2, function(coli) {all(sort(floor(81*coli)) == 0:80)})))
+})
 
+test_that("Lflex prefer_L properly", {
   # Make sure that prefer_L works
   s <- sFFLHD_Lflex$new(D=7,L=10)
   expect_equal(s$L_used, 9)
@@ -51,6 +54,8 @@ test_that("Is LHD", {
   expect_equal(s$L_used, 11)
   s <- sFFLHD_Lflex$new(D=7,L=10, prefer_L="near")
   expect_equal(s$L_used, 9)
+  s <- sFFLHD_Lflex$new(D=7,L=12, prefer_L="up")
+  expect_equal(s$L_used, 11)
 
   s <- sFFLHD_Lflex$new(D=11,L=2, prefer_L="down")
   expect_equal(s$L_used, 11)
@@ -59,6 +64,14 @@ test_that("Is LHD", {
   s <- sFFLHD_Lflex$new(D=11,L=2, prefer_L="near")
   expect_equal(s$L_used, 11)
 
+  expect_error(sFFLHD_Lflex$new(D=11,L=2, prefer_L="nar")) # purposeful misspell to get an error
+  expect_error(sFFLHD_Lflex$new(D=11,L=2, prefer_L=TRUE)) # Should be error too
+
   expect_error(sFFLHD_Lflex$new(D=13,L=4))
 
+})
+
+test_that("Works fine when L is good", {
+  s <- sFFLHD_Lflex$new(D=2,L=4)
+  expect_equal(s$L_used, 4)
 })
