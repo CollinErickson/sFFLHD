@@ -96,7 +96,9 @@ sFFLHD <- setRefClass('sFFLHD',
       stop('Only stage 1 and 2')
     }, # end get.batch
     stage0 = function() { # Do steps 0 and 1
-      if (length(D) == 0 | length(L) == 0) {stop('D and L must be specified')}
+      if (length(D) != 1 | length(L) != 1) {stop('D and L must be specified')}
+      if (as.integer(D) != D) {stop("D must be integer")}
+      if (as.integer(L) != L) {stop("L must be integer")}
       if (D == 1) {stop("Doesn't work in 1 dimension")}
       if (length(a)==0) {
         a.fac <- factorize(L)
@@ -116,10 +118,10 @@ sFFLHD <- setRefClass('sFFLHD',
       Wb <<- matrix(NA,nrow=0,ncol=D)
       Xb <<- matrix(NA,nrow=0,ncol=D)
       stage <<- 1L # stage 1 is step 2, stage 2 is step 4
-      # make sure D,L,a are all set
-      if (length(D)==0 | length(L)==0 | length(a)==0) {
-        stop('D, L, and a must be set when creating new object')
-      }
+      # make sure D,L,a are all set REMOVED since D and L are already checked, and a should be good
+      # if (length(D)==0 | length(L)==0 | length(a)==0) {
+      #   stop('D, L, and a must be set when creating new object')
+      # }
 
       # get first OA
       # browser()

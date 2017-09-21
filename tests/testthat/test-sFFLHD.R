@@ -29,7 +29,7 @@ test_that("Errors", {
   expect_error(sFFLHD$new(D=1, L=3)$get.batch())
 })
 
-test_that("a", {
+test_that("a is set correctly", {
 
   s <- sFFLHD$new(D=2, L=9)
   s$get.batch()
@@ -68,4 +68,20 @@ test_that("get.batches.to.golden", {
   tm2 <- s$get.batches.to.golden()
   expect_equal(dim(tm2), c(72,2))
 
+})
+
+test_that("Extreme errors", {
+  s <- sFFLHD$new(D=2, L=3)
+  s$get.batch()
+  s$stage <- 4L
+  expect_error(s$get.batch())
+  expect_error(sFFLHD(D=11, L=7, a=2.3)$get.batch())
+  expect_error(sFFLHD(D=2, L=3.3)$get.batch())
+  expect_error(sFFLHD(D=2.01, L=3)$get.batch())
+  expect_error(sFFLHD(D=2, L=8, a=4)$get.batch())
+})
+
+test_that("No OAs", {
+  expect_error(sFFLHD(D=13, L=3)$get.batch())
+  expect_error(sFFLHD(D=11, L=7)$get.batch())
 })
