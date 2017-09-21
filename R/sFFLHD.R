@@ -288,7 +288,14 @@ sFFLHD <- setRefClass('sFFLHD',
       return(out)
     }, # end get.batches function
     get.batches.to.golden = function() {
-      get.batches((Lb^D-dim(Xb)[1])/L)
+      if (length(Lb) == 0) { # Need this in case no batches have been taken yet
+                             #  since Lb will be numeric(0) and give issue
+        b1 <- get.batch()
+        b2 <- get.batches((Lb^D-dim(Xb)[1])/L)
+        rbind(b1, b2)
+      } else {
+        get.batches((Lb^D-dim(Xb)[1])/L)
+      }
     } # end get.batches.to.golden function
   )
 )

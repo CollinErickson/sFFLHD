@@ -44,14 +44,14 @@ test_that("a", {
   expect_equal(s$a, 2)
 })
 
-test_that("get_batches", {
+test_that("get.batches", {
 
   s <- sFFLHD$new(D=2, L=8)
   tm <- s$get.batches(5)
   expect_equal(dim(tm), c(40,2))
 })
 
-test_that("get_batches to golden", {
+test_that("get.batches.to.golden", {
 
   s <- sFFLHD$new(D=2, L=3)
   s$get.batch()
@@ -59,4 +59,13 @@ test_that("get_batches to golden", {
   expect_equal(dim(tm), c(6,2))
   tm2 <- s$get.batches.to.golden()
   expect_equal(dim(tm2), c(72,2))
+
+
+  # Check that I can do golden first
+  s <- sFFLHD$new(D=2, L=3)
+  tm <- s$get.batches.to.golden()
+  expect_equal(dim(tm), c(9,2))
+  tm2 <- s$get.batches.to.golden()
+  expect_equal(dim(tm2), c(72,2))
+
 })
