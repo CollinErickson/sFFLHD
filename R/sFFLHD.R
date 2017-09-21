@@ -76,10 +76,15 @@ sFFLHD <- setRefClass('sFFLHD',
                 Xb = 'matrix',Vb = 'matrix',Mb = 'matrix',Wb = 'matrix',
                 A1 = 'matrix',r = 'integer',p = 'integer',Ar = 'matrix',
                 stage = 'integer',vii = 'integer',Fslices = 'list',
-                FF1.1 = 'matrix',Mb.store='matrix',v.shuffle = 'integer'
+                FF1.1 = 'matrix',Mb.store='matrix',v.shuffle = 'integer',
+                seed = 'numeric'
   ),
   methods = list(
     get.batch = function() {
+      if (length(seed) > 0) {
+        set.seed(seed)
+        seed <<- seed + 1
+      }
       if (length(stage)==0) { # initialize everything
         stage0()
       }
