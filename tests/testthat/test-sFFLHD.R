@@ -7,3 +7,56 @@ test_that("Is LHD", {
   is_lhd <- apply(Xint, 2, function(colm) {all(sort(colm) == 0:8)})
   expect_true(all(is_lhd))
 })
+
+test_that("seed works", {
+  s <- sFFLHD$new(D=2,L=3, seed=123)
+  s$get.batches(3)
+  sb <- s$get.batch()
+
+  t <- sFFLHD$new(D=2,L=3, seed=123)
+  t$get.batches(3)
+  runif(100)
+  tb <- t$get.batch()
+  expect_equal(t$seed, 127)
+
+  expect_equal(sb, tb)
+})
+
+test_that("Errors") {
+  expect_error(sFFLHD$new()$get.batch())
+  expect_error(sFFLHD$new(D=2)$get.batch())
+  expect_error(sFFLHD$new(L=3)$get.batch())
+  expect_error(sFFLHD$new(D=1, L=3)$get.batch())
+}
+
+test_that("a") {
+
+  s <- sFFLHD$new(D=2, L=9)
+  s$get.batch()
+  expect_equal(s$a, 3)
+
+  s <- sFFLHD$new(D=2, L=6)
+  s$get.batch()
+  expect_equal(s$a, 6)
+
+  s <- sFFLHD$new(D=2, L=8)
+  s$get.batch()
+  expect_equal(s$a, 2)
+}
+
+test_that("get_batches", {
+
+  s <- sFFLHD$new(D=2, L=8)
+  tm <- s$get.batches(5)
+  expect_equal(dim(tm), c(40,2))
+})
+
+test_that("get_batches to golden", {
+
+  s <- sFFLHD$new(D=2, L=3)
+  s$get.batch()
+  tm <- s$get.batches.to.golden()
+  expect_equal(dim(tm), c(6,2))
+  tm2 <- s$get.batches.to.golden()
+  expect_equal(dim(tm2), c(72,2))
+})
