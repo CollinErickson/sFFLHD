@@ -22,14 +22,14 @@ test_that("seed works", {
   expect_equal(sb, tb)
 })
 
-test_that("Errors") {
+test_that("Errors", {
   expect_error(sFFLHD$new()$get.batch())
   expect_error(sFFLHD$new(D=2)$get.batch())
   expect_error(sFFLHD$new(L=3)$get.batch())
   expect_error(sFFLHD$new(D=1, L=3)$get.batch())
-}
+})
 
-test_that("a") {
+test_that("a", {
 
   s <- sFFLHD$new(D=2, L=9)
   s$get.batch()
@@ -42,7 +42,7 @@ test_that("a") {
   s <- sFFLHD$new(D=2, L=8)
   s$get.batch()
   expect_equal(s$a, 2)
-}
+})
 
 test_that("get_batches", {
 
