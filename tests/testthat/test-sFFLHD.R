@@ -26,7 +26,23 @@ test_that("Errors", {
   expect_error(sFFLHD$new()$get.batch())
   expect_error(sFFLHD$new(D=2)$get.batch())
   expect_error(sFFLHD$new(L=3)$get.batch())
-  expect_error(sFFLHD$new(D=1, L=3)$get.batch())
+  # expect_error(sFFLHD$new(D=1, L=3)$get.batch()) # 1D now works
+})
+
+test_that("1D works", {
+  s <- sFFLHD(D=1, L=4)
+  b1 <- s$get.batch()
+  expect_equal(sort(floor(b1*4)), 0:3)
+  b2 <- s$get.batches.to.golden()
+  expect_equal(sort(floor(b2[9:12]*4)), 0:3)
+  expect_equal(sort(floor(c(c(b1),c(b2))*16)), 0:15)
+
+  s <- sFFLHD(D=1, L=7)
+  b1 <- s$get.batch()
+  expect_equal(sort(floor(b1*7)), 0:6)
+  b2 <- s$get.batches.to.golden()
+  expect_equal(sort(floor(b2[36:42]*7)), 0:6)
+  expect_equal(sort(floor(c(c(b1),c(b2))*49)), 0:48)
 })
 
 test_that("a is set correctly", {

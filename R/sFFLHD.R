@@ -99,7 +99,7 @@ sFFLHD <- setRefClass('sFFLHD',
       if (length(D) != 1 | length(L) != 1) {stop('D and L must be specified')}
       if (as.integer(D) != D) {stop("D must be integer")}
       if (as.integer(L) != L) {stop("L must be integer")}
-      if (D == 1) {stop("Doesn't work in 1 dimension")}
+      # if (D == 1) {stop("Doesn't work in 1 dimension")} # Now it does mostly
       if (length(a)==0) {
         a.fac <- factorize(L)
         if(all(a.fac==a.fac[1])) {a <<- a.fac[1]}
@@ -173,12 +173,14 @@ sFFLHD <- setRefClass('sFFLHD',
       if (p==1L) { # Get the Ar
         if(D==2) { # Had a problem when D==2, v was c(0,0,0,0) instead of c(0,0)
           v <- c(0,0)
-        } else {
+        } else if (D==1) {
+          v <- c(0)
+        } else { # Only works for D > 2
           v <- c(0,0, ((r-1)%/%(L^((D-2-1):0))) %% L)
         }
         Ar <<- sweep(A1,2,v,'+')%%L + 1 #now OAs start at 0, not sure if right, maybe add 1??????
       }
-      Arp <- Ar[((p-1)*L+1):(p*L),]
+      Arp <- Ar[((p-1)*L+1):(p*L), , drop=FALSE]
       if(nb+L > lb) { # Xb reached an LHD, increase small grid
         lb <<- lb * a
         Vb <<- ceiling(Xb*lb)
@@ -204,7 +206,7 @@ sFFLHD <- setRefClass('sFFLHD',
       } else{
         p <<- p + 1L
       }
-      return(Xb[n1:n2,])
+      return(Xb[n1:n2, , drop=FALSE])
     }, # end stage1 function
     stage2 = function() { # run steps 4 and 5
       if (vii==1L & r==1L & p==1L) { # If first time through, set values
@@ -214,8 +216,15 @@ sFFLHD <- setRefClass('sFFLHD',
       }
       if (r==1L & p==1L) { # If new vii, set Fslices for it
         v <- (v.shuffle[vii]%/%(a^((D-1):0))) %% a
-        FFv <- FF1.1 + sweep(Mb.store,2,v,'+')%%a
-        Fslices1 <- split_matrix(FFv,nsplits=L^(D-2)*(Lb/a/L)^D)
+
+        # Messed things up around here trying to get D=1 to work, shouldn't affect D>=2 though
+        if (D>1 && (L^(D-2)*(Lb/a/L)^D != (nrow(Mb.store)/L^2))) {
+          stop("Something is wrong here, change it back to old version #85205")
+        }
+        FFv <- FF1.1 + sweep(Mb.store,2,v,'+')%%a # ; print(c(L^(D-2)*(Lb/a/L)^D, nrow(Mb.store)/L^2)); #;browser()
+        # Fslices1 <- split_matrix(FFv,nsplits=L^(D-2)*(Lb/a/L)^D) # Old, correct version for D>=2. Changed to try to get D=1.
+        Fslices1 <- split_matrix(FFv,nsplits=nrow(Mb.store) / L^2) # This is correct except for maybe D=1
+
         Fslices <<- lapply(Fslices1,split_matrix,L)
       }
       if (nb+L > lb) { # increase grid if reached LHS
@@ -248,7 +257,7 @@ sFFLHD <- setRefClass('sFFLHD',
           }
         }
       }
-      return(Xb[n1:n2,])
+      return(Xb[n1:n2, , drop=FALSE])
     }, # end stage2 function
     NB = function(G,eps=NULL) {
       # Add batch NB(G,eps,b)
@@ -285,6 +294,9 @@ sFFLHD <- setRefClass('sFFLHD',
       }
     }, # end stage3 function
     get.batches = function(num) { # get multiple batches at once
+      if (num < 1 || abs(num - as.integer(num)) > 1e-8) {
+        stop(paste0("Can only get positive integer number of batches, not ", num))
+      }
       out <- matrix(nrow=0,ncol=D)
       for (i in 1:num) {out <- rbind(out,get.batch())}
       return(out)
@@ -293,10 +305,10 @@ sFFLHD <- setRefClass('sFFLHD',
       if (length(Lb) == 0) { # Need this in case no batches have been taken yet
                              #  since Lb will be numeric(0) and give issue
         b1 <- get.batch()
-        b2 <- get.batches((Lb^D-dim(Xb)[1])/L)
+        b2 <- get.batches((Lb^max(D,2)-dim(Xb)[1])/L) # Add max for D=1
         rbind(b1, b2)
       } else {
-        get.batches((Lb^D-dim(Xb)[1])/L)
+        get.batches((Lb^max(D,2) - dim(Xb)[1]) / L) # Add max for D=1
       }
     } # end get.batches.to.golden function
   )
