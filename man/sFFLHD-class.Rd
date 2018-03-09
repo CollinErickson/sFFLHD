@@ -19,7 +19,8 @@ sFFLHD object that gives a batch of points at a time.
 \item{\code{L}}{numeric. The number of points in each batch, also the number of
 levels of each dimension. Must be set.}
 
-\item{\code{maximin}}{logical. Should maximin distance be used to space out points?}
+\item{\code{maximin}}{logical. Should maximin distance be used to space out points?
+TRUE by default.}
 
 \item{\code{a}}{numeric. A root of L that determines the intermediate stages.
 Is automatically set to smallest possible value, which is recommended.}

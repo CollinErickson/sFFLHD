@@ -31,6 +31,7 @@ split_matrix <- function(mat,rowspergroup=NULL,nsplits=NULL,shuffle=TRUE) {
 #' @field L numeric. The number of points in each batch, also the number of
 #'  levels of each dimension. Must be set.
 #' @field maximin logical. Should maximin distance be used to space out points?
+#' TRUE by default.
 #' @field a numeric. A root of L that determines the intermediate stages.
 #' Is automatically set to smallest possible value, which is recommended.
 #' @field b integer. The batch number.
@@ -166,7 +167,10 @@ sFFLHD <- setRefClass('sFFLHD',
       A1 <<- OA3[,2:(D+1), drop=F]
       r <<- 1L
       p <<- 1L
-      maximin <<- TRUE # Seems to work, slows it down a little bit
+      # Set maximin TRUE if not given in
+      if (length(maximin) == 0) {
+        maximin <<- TRUE # Seems to work, slows it down a little bit
+      }
       # end initialization
     }, # end stage0 function
     stage1 = function() { # run steps 2 and 3
