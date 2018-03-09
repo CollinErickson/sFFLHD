@@ -31,7 +31,8 @@ split_matrix <- function(mat,rowspergroup=NULL,nsplits=NULL,shuffle=TRUE) {
 #' @field L numeric. The number of points in each batch, also the number of
 #'  levels of each dimension. Must be set.
 #' @field maximin logical. Should maximin distance be used to space out points?
-#' TRUE by default.
+#' TRUE by default. Only used while lb <= 100, not worth it once the boxes
+#' are very small.
 #' @field a numeric. A root of L that determines the intermediate stages.
 #' Is automatically set to smallest possible value, which is recommended.
 #' @field b integer. The batch number.
@@ -287,12 +288,17 @@ sFFLHD <- setRefClass('sFFLHD',
           Wb[nb+1+i-1,j] <<- floor(L * G[i,j] / Lb)
           Xb[nb+1+i-1,j] <<- (e - e2) / lb
         }
-        if (maximin && (b > 0 | i > 1)) { # all but first point
+        # If maximin, optimize to space them out
+        # Don't do it on first point
+        # Or when lb is big, not worth it then
+        if (maximin && (b > 0 | i > 1) && lb <= 100) {
           optim.func <- function(xx) {
             -min(rowSums(sweep(Xb[1:(nb+i-1),,drop=FALSE], 2, (Vb[nb+i,]-xx)/lb)^2))
           }
           # don't let it get exactly in any corner, might end up in wrong square
-          opt.out <- optim(rep(.5,D), optim.func, lower=rep(1e-4, D), upper=rep(1-1e-4, D), method="L-BFGS-B")
+          opt.out <- optim(rep(.5,D), optim.func,
+                           lower=rep(1e-4, D), upper=rep(1-1e-4, D),
+                           method="L-BFGS-B", control=list(factr=1e9))
           Xb[nb+i,] <<- (Vb[nb+i,]-opt.out$par)/lb
         }
       }

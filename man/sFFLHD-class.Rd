@@ -20,7 +20,8 @@ sFFLHD object that gives a batch of points at a time.
 levels of each dimension. Must be set.}
 
 \item{\code{maximin}}{logical. Should maximin distance be used to space out points?
-TRUE by default.}
+TRUE by default. Only used while lb <= 100, not worth it once the boxes
+are very small.}
 
 \item{\code{a}}{numeric. A root of L that determines the intermediate stages.
 Is automatically set to smallest possible value, which is recommended.}

@@ -1,5 +1,5 @@
 s <- sFFLHD$new(D=2,L=3)
-plot(s$get.batch(),xlim=0:1,ylim=0:1,pch=19)
+plot(s$get.batch(),xlim=0:1,ylim=0:1,pch=19);abline(h=(setdiff(0:9,c(0,3,6,9)))/9,v=(setdiff(0:9,c(0,3,6,9)))/9,col=4)
 abline(h=(0:(s$Lb))/s$Lb,v=(0:(s$Lb))/s$Lb,col=3);points(s$get.batch(),pch=19)
 for(i in 1:27){abline(h=(0:(s$Lb))/s$Lb,v=(0:(s$Lb))/s$Lb,col=3);points(s$get.batch(),pch=19)}
 abline(h=(0:(s$Lb))/s$Lb,v=(0:(s$Lb))/s$Lb,col=3);points(s$get.batches.to.golden(),pch=19)
