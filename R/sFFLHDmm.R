@@ -52,7 +52,8 @@ sFFLHDmm <- R6::R6Class(classname="sFFLHDmm",
         } else {
           if (length(self$Xchoices) == 0) {
             Xnew <- self$s$get.batches.to.golden()
-            Xnewchoices <- split_matrix(mat=Xnew, rowspergroup = self$s$L, shuffle = FALSE)
+            Xnewchoices <- split_matrix(mat=Xnew, rowspergroup = self$s$L,
+                                        shuffle = FALSE)
             self$Xchoices <- Xnewchoices #c(self$Xchoices, )
             #self$s$get.batches.to.golden()
             #self$have_choices <- TRUE
@@ -62,7 +63,9 @@ sFFLHDmm <- R6::R6Class(classname="sFFLHDmm",
             selection <- 1
           } else {
           # now we have choices, do maximin
-            mindists <- sapply(self$Xchoices, function(xx) {self$mindist.1(self$X, xx)})
+            mindists <- sapply(self$Xchoices,
+                               function(xx) {self$mindist.1(self$X, xx)}
+                               )
             selection <- which.max(mindists)
           }
           bat <- self$Xchoices[[selection]]
@@ -74,7 +77,8 @@ sFFLHDmm <- R6::R6Class(classname="sFFLHDmm",
       },
       maximin = function() {
         for (i in 1:choices) {
-          mindists[i] <- self$mindist.1(self$s$Xb[1:(self$b * self$s$L)], self$s$Xb)
+          mindists[i] <- self$mindist.1(self$s$Xb[1:(self$b * self$s$L)],
+                                        self$s$Xb)
         }
       },
       #mindist.all = function(Xlist, X1) {
@@ -82,7 +86,8 @@ sFFLHDmm <- R6::R6Class(classname="sFFLHDmm",
       #}
       mindist.1 = function(a,b) {#browser()
         # a and b are matrices, points along row
-        min(outer(1:nrow(a), 1:nrow(b), Vectorize(function(i,j) {sum((a[i,] - b[j,])^2)})))
+        min(outer(1:nrow(a), 1:nrow(b),
+                  Vectorize(function(i,j) {sum((a[i,] - b[j,])^2)})))
       },
 
       get.batches = function(num) { # get multiple batches at once
