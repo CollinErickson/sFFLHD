@@ -96,8 +96,9 @@ sFFLHD_Lflex <- R6::R6Class(
         # self$L_used <- L_used
         # OA <- DoE.base::oa.design(nruns=nruns, nfactors=D+1, nlevels=L, columns="min3")
 
-        self$s <- sFFLHD::sFFLHD(D=self$D, L=self$L_used, ...)
       }
+      # Create s using L_used
+      self$s <- sFFLHD::sFFLHD(D=self$D, L=self$L_used, ...)
     },
     get.batch = function() {#browser()
       # If not enough points in Xchoices
