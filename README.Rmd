@@ -8,7 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "tools/README-"
 )
 ```
 
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # sFFLHD
 
 [![Travis-CI Build Status](https://travis-ci.org/CollinErickson/sFFLHD.svg?branch=master)](https://travis-ci.org/CollinErickson/sFFLHD)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/sFFLHD)](http://cran.r-project.org/package=sFFLHD)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/sFFLHD)](https://cran.r-project.org/package=sFFLHD)
 
 
 This R package provides a class that generates experiment sFFLHD designs. 

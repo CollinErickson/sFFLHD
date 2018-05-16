@@ -1,15 +1,8 @@
-The previous version doesn't work since the entire DoE.base
-package needs to be loaded. So I moved it to from 
-Imports to Depends.
-I don't want to do this since I only directly call one
-function from the package, but it's the only way to get it
-to work now. I have emailed the maintainer of DoE.base seeing
-if they have plans to make the single function work without
-needing to load the entire package and am awaiting their reply.
+I got an email from Kurt Hornik about README images not being in the correct place.
+I moved them to the tools folder, so it should be fine now.
 
 ## Test environments
-* local Windows 7 install, R 3.3.1
-* Linux on a UNIX cluster, R 3.1.2
+* local Windows 7 install, R 3.4.4
 * win-builder
 
 ## R CMD check results
