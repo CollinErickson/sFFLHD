@@ -1,3 +1,7 @@
+# sFFLHD 0.1.2
+
+Fixing issue with README (image moved to tools folder).
+
 # sFFLHD 0.1.0
 
 This is the first version of this package. I had written the function
