@@ -1,7 +1,3 @@
-# sFFLHD 0.1.2
-
-Fixing issue with README (image moved to tools folder).
-
 # sFFLHD 0.1.0
 
 This is the first version of this package. I had written the function
@@ -17,6 +13,12 @@ I'd rather not do this, but it's the only way to get it to work.
 
 Accepted by CRAN on 9/21/2016
 
-# sFFLHD 0.1.1.9000
+# sFFLHD 0.1.2
+
+Fixing issue with README (image moved to tools folder).
+
+Accepted by CRAN on 5/17/2018
+
+# sFFLHD 0.1.2.9000
 
 In development.
