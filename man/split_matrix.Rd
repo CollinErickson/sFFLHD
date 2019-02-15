@@ -5,7 +5,8 @@
 \title{Split a matrix by rows, based on either the number of rows per group
 or number of splits.}
 \usage{
-split_matrix(mat, rowspergroup = NULL, nsplits = NULL, shuffle = TRUE)
+split_matrix(mat, rowspergroup = NULL, nsplits = NULL,
+  shuffle = TRUE)
 }
 \arguments{
 \item{mat}{A matrix to be split.}
